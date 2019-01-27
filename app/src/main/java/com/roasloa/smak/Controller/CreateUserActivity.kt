@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.roasloa.smak.Controller.Services.AuthService
 import com.roasloa.smak.R
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.Random
@@ -46,7 +47,12 @@ class CreateUserActivity : AppCompatActivity() {
         avatarColor = "[$savedR, $savedG, $savedB, 1]"
     }
     fun createUserClicked(view: View) {
+        AuthService.registerUser(this,"j@j.com","123456"){complete ->
+            if(complete){
 
+            }
+
+        }
 
     }
 
