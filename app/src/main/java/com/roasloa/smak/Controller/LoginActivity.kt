@@ -1,9 +1,10 @@
-package com.roasloa.smak
+package com.roasloa.smak.Controller
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.roasloa.smak.R
 
 class LoginActivity : AppCompatActivity() {
 
