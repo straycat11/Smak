@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.roasloa.smak.Controller.Services.AuthService
+import com.roasloa.smak.Controller.Services.UserDataService
 import com.roasloa.smak.R
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.Random
@@ -48,12 +49,22 @@ class CreateUserActivity : AppCompatActivity() {
     }
     fun createUserClicked(view: View) {
 
+        val userName = createUserNameTxt.text.toString()
         val email = createUserEmailTxt.toString()
         val password = createUserPwTxt.text.toString()
         AuthService.registerUser(this,email,password){registerSuccess ->
             if(registerSuccess){
                 AuthService.loginUser(this,email,password){loginSuccess ->
                     if(loginSuccess){
+                        AuthService.createUser(this, userName, email, userAvatar, avatarColor){createSuccess ->
+                            if(createSuccess){
+                                println(UserDataService.avatarName)
+                                println(UserDataService.avatarColor)
+                                println(UserDataService.name)
+                                finish()
+                            }
+
+                        }
 
                     }
 
