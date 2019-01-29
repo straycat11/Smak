@@ -54,6 +54,8 @@ class CreateUserActivity : AppCompatActivity() {
     }
     fun createUserClicked(view: View) {
 
+        enableSpinner(true)
+
         val userName = createUserNameTxt.text.toString()
         val email = createUserEmailTxt.toString()
         val password = createUserPwTxt.text.toString()
@@ -81,6 +83,10 @@ class CreateUserActivity : AppCompatActivity() {
 
             }
 
+        }else {
+            Toast.makeText(this, "Make sure user name, email, and password are filled in.",
+                Toast.LENGTH_LONG).show()
+            enableSpinner(false)
         }
         }
 
