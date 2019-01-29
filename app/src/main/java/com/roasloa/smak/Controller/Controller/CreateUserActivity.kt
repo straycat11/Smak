@@ -1,4 +1,4 @@
-package com.roasloa.smak.Controller
+package com.roasloa.smak.Controller.Controller
 
 import android.content.Intent
 import android.graphics.Color
@@ -8,7 +8,6 @@ import android.support.v4.content.LocalBroadcastManager
 import android.view.View
 import android.widget.Toast
 import com.roasloa.smak.Controller.Services.AuthService
-import com.roasloa.smak.Controller.Services.UserDataService
 import com.roasloa.smak.Controller.Utilities.BROADCAST_USER_DATA_CHANGE
 import com.roasloa.smak.R
 import kotlinx.android.synthetic.main.activity_create_user.*

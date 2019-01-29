@@ -1,4 +1,4 @@
-package com.roasloa.smak.Controller
+package com.roasloa.smak.Controller.Controller
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     fun loginCreateUserClicked(view: View){
         val createUserIntent = Intent(this, CreateUserActivity::class.java)
         startActivity(createUserIntent)
+        finish()
     }
 
 }

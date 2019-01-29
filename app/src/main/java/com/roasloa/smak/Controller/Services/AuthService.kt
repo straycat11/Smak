@@ -41,7 +41,7 @@ object AuthService {
             }
         }
 
-        Volley.newRequestQueue(context).add(registerRequest).setShouldCache(false)
+        Volley.newRequestQueue(context).add(registerRequest)//.setShouldCache(false)
     }
 
     fun loginUser(context: Context, email: String, password: String, complete: (Boolean) -> Unit) {
@@ -81,7 +81,7 @@ object AuthService {
                 return requestBody.toByteArray()
             }
         }
-        Volley.newRequestQueue(context).add(loginRequest).setShouldCache(false)
+        Volley.newRequestQueue(context).add(loginRequest)//.setShouldCache(false)
 
     }
 
@@ -134,7 +134,7 @@ object AuthService {
 
         }
 
-        Volley.newRequestQueue(context).add(createRequest).setShouldCache(false)
+        Volley.newRequestQueue(context).add(createRequest)//.setShouldCache(false)
     }
 
 }
