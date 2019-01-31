@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             if(AuthService.isLoggedIn){
                 println("The user logged in status is: ${AuthService.isLoggedIn}")
                 userNameNavHeader.text = UserDataService.name
+                println("${userNameNavHeader.text} = ${UserDataService.name}")
                 userEmailNavHeader.text = UserDataService.email
                 val resourceId = resources.getIdentifier(UserDataService.avatarName, "drawable",
                     packageName)
@@ -65,15 +66,16 @@ class MainActivity : AppCompatActivity() {
         if(AuthService.isLoggedIn){
             //log out
             UserDataService.logOut()
-            userNameNavHeader.text = "LOGIN"
+            userNameNavHeader.text = ""
             userEmailNavHeader.text = ""
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
             loginBtnNavHeader.text = "LOGIN"
 
-        }
+        }else{
         val loginActivity = Intent(this, LoginActivity::class.java)
         startActivity(loginActivity)
+        }
     }
 
     fun addChannelClicked(view: View) {
