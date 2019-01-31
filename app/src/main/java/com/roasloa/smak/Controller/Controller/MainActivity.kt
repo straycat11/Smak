@@ -18,12 +18,16 @@ import android.widget.EditText
 import com.roasloa.smak.Controller.Services.AuthService
 import com.roasloa.smak.Controller.Services.UserDataService
 import com.roasloa.smak.Controller.Utilities.BROADCAST_USER_DATA_CHANGE
+import com.roasloa.smak.Controller.Utilities.SOCKET_URL
 import com.roasloa.smak.R
+import io.socket.client.IO
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    val socket = IO.socket(SOCKET_URL)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -42,10 +46,26 @@ class MainActivity : AppCompatActivity() {
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-        hideKeyboard()
 
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver,
             IntentFilter(BROADCAST_USER_DATA_CHANGE))
+        socket.connect()
+    }
+
+    override fun onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(userDataChangeReceiver)
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        socket.disconnect()
+        super.onDestroy()
 
     }
 
@@ -93,16 +113,17 @@ class MainActivity : AppCompatActivity() {
 
                     val channelName = nameTextField.text.toString()
                     val channelDesc = descTextField.text.toString()
-                    hideKeyboard()
+
+
+                    socket.emit("newChannel", channelName, channelDesc)
 
                 }.setNegativeButton("Cancel"){dialogInterface, i ->
-                    hideKeyboard()
                 }.show()
         }
     }
 
     fun sendMessageBtnClicked(view: View){
-
+        hideKeyboard()
     }
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
