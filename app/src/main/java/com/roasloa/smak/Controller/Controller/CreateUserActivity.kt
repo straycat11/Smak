@@ -100,9 +100,6 @@ class CreateUserActivity : AppCompatActivity() {
     fun enableSpinner(enable: Boolean){
         if(enable){
             createSpinner.visibility = View.VISIBLE
-            createUserBtn.isEnabled = false
-            createAvatarImage.isEnabled = false
-            backgroundColorBtn.isEnabled = false
         }else{
             createSpinner.visibility = View.INVISIBLE
         }

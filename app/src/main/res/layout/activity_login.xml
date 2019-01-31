@@ -54,4 +54,12 @@
             android:layout_marginEnd="32dp" android:layout_marginStart="32dp"
             android:background="@color/design_default_color_primary" android:textColor="@android:color/white"
             android:onClick="loginCreateUserClicked"/>
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginSpinner"
+            app:layout_constraintBottom_toTopOf="@+id/textView" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintEnd_toEndOf="parent"
+    />
 </android.support.constraint.ConstraintLayout>
