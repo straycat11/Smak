@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import com.roasloa.smak.Controller.Model.Channel
 import com.roasloa.smak.Controller.Services.AuthService
@@ -32,6 +33,12 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 class MainActivity : AppCompatActivity() {
 
     val socket = IO.socket(SOCKET_URL)
+    lateinit var channelAdapter: ArrayAdapter<Channel>
+
+    private fun setupAdapter(){
+        channelAdapter = ArrayAdapter(this,android.R.layout.simple_list_item_1, MessageService.channels)
+        channel_list.adapter = channelAdapter
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -52,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+        setupAdapter()
 
 
 
@@ -73,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val userDataChangeReceiver = object: BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context, intent: Intent?) {
             if(AuthService.isLoggedIn){
                 println("The user logged in status is: ${AuthService.isLoggedIn}")
                 userNameNavHeader.text = UserDataService.name
@@ -84,6 +92,13 @@ class MainActivity : AppCompatActivity() {
                 userImageNavHeader.setImageResource(resourceId)
                 userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginBtnNavHeader.text = "Logout"
+
+                MessageService.getChannels(context){complete->
+                    if(complete){
+                        channelAdapter.notifyDataSetChanged()
+                    }
+
+                }
             }
         }
     }
@@ -144,6 +159,7 @@ class MainActivity : AppCompatActivity() {
 
             val newChannel = Channel(channelName,channelDescription,channelId)
             MessageService.channels.add(newChannel)
+            channelAdapter.notifyDataSetChanged()
         }
     }
     fun hideKeyboard(){
