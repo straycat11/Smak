@@ -1,6 +1,7 @@
 package com.roasloa.smak.Controller.Services
 
 import android.graphics.Color
+import com.roasloa.smak.Controller.Controller.App
 import java.util.*
 
 object UserDataService {
@@ -16,9 +17,9 @@ object UserDataService {
         avatarName = ""
         email = ""
         name = ""
-        AuthService.authToken = ""
-        AuthService.userEmail = ""
-        AuthService.isLoggedIn = false
+        App.sharedPrefs.authToken = ""
+        App.sharedPrefs.userEmail = ""
+        App.sharedPrefs.isLoggedIn = false
     }
     fun returnAvatarColor(components: String): Int {
         val strippedColor = components.replace("[", "")

@@ -61,6 +61,9 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
         setupAdapter()
 
+        if(App.sharedPrefs.isLoggedIn){
+            AuthService.findUserByEmail(this){}
+        }
 
 
     }
@@ -82,8 +85,8 @@ class MainActivity : AppCompatActivity() {
 
     private val userDataChangeReceiver = object: BroadcastReceiver(){
         override fun onReceive(context: Context, intent: Intent?) {
-            if(AuthService.isLoggedIn){
-                println("The user logged in status is: ${AuthService.isLoggedIn}")
+            if(App.sharedPrefs.isLoggedIn){
+                println("The user logged in status is: ${App.sharedPrefs.isLoggedIn}")
                 userNameNavHeader.text = UserDataService.name
                 println("${userNameNavHeader.text} = ${UserDataService.name}")
                 userEmailNavHeader.text = UserDataService.email
@@ -105,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
     fun loginBtnNavClicked(view: View) {
 
-        if(AuthService.isLoggedIn){
+        if(App.sharedPrefs.isLoggedIn){
             //log out
             UserDataService.logOut()
             userNameNavHeader.text = ""
@@ -121,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addChannelClicked(view: View) {
-        if(AuthService.isLoggedIn) {
+        if(App.sharedPrefs.isLoggedIn) {
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.add_channel_dialog, null)
             builder.setView(dialogView)
