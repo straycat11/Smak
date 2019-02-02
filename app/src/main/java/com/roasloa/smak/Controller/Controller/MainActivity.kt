@@ -6,18 +6,17 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Message
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import com.roasloa.smak.Controller.Model.Channel
+import com.roasloa.smak.Controller.Model.Message
 import com.roasloa.smak.Controller.Services.AuthService
 import com.roasloa.smak.Controller.Services.MessageService
 import com.roasloa.smak.Controller.Services.UserDataService
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         socket.connect()
         socket.on("channelCreated",onNewChannel)
+        socket.on("messageCreated",onNewMessage)
 
 
 
@@ -163,6 +163,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendMessageBtnClicked(view: View){
+        if(App.sharedPrefs.isLoggedIn && messageTextField.text.isNotEmpty() && selectedChannel != null){
+            val userId = UserDataService.id
+            val channelId = selectedChannel!!.id
+            socket.emit("newMessage",messageTextField.text.toString(),userId,channelId, UserDataService.name, UserDataService.avatarName, UserDataService.avatarColor)
+            messageTextField.text.clear()
+            hideKeyboard()
+        }
         hideKeyboard()
     }
     override fun onBackPressed() {
@@ -182,6 +189,21 @@ class MainActivity : AppCompatActivity() {
             val newChannel = Channel(channelName,channelDescription,channelId)
             MessageService.channels.add(newChannel)
             channelAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private val onNewMessage = Emitter.Listener { args ->
+        runOnUiThread {
+            val messageBody = args[0] as String
+            val channelId = args[2] as String
+            val userName = args[3] as String
+            val userAvatar = args[4] as String
+            val userAvatarColor = args[5] as String
+            val id = args[6] as String
+            val timeStamp = args[7] as String
+
+            val newMessage = Message(messageBody,userName,channelId,userAvatar,userAvatarColor,id,timeStamp)
+            MessageService.messages.add(newMessage)
         }
     }
     fun hideKeyboard(){
