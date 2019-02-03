@@ -26,6 +26,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" android:hint="message:"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="395dp"
+            android:layout_height="591dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/mainChannelName" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/messageTextField"
+            android:id="@+id/messageListView">
+    </android.support.v7.widget.RecyclerView>
     <ImageButton
             android:layout_width="35dp"
             android:layout_height="35dp" app:srcCompat="@drawable/ic_menu_send"
@@ -34,12 +42,5 @@
             android:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp" android:background="@android:color/transparent"
             android:onClick="sendMessageBtnClicked"/>
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="395dp"
-            android:layout_height="591dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/mainChannelName" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/messageTextField"
-            android:id="@+id/messageListView"/>
 
 </android.support.constraint.ConstraintLayout>
